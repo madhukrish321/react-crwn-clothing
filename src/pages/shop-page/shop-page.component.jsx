@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import CollectionPreview from '../../components/collection-preview/collection-preview.component'
-import SHOP_PAGE_DATA from './shoppage.data'
+import SHOP_PAGE_DATA from './shop-page.data'
+import './shop-page.styles.scss'
+
 class ShopPage extends Component {
   constructor() {
     super()
