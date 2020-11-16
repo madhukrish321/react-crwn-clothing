@@ -7,14 +7,14 @@ import "firebase/auth"
 import "firebase/firestore"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDJD8coyVKXx79Stu0xPP3cJOsTdY_e6z8",
-  authDomain: "crown-db-df122.firebaseapp.com",
-  databaseURL: "https://crown-db-df122.firebaseio.com",
-  projectId: "crown-db-df122",
-  storageBucket: "crown-db-df122.appspot.com",
-  messagingSenderId: "307237370999",
-  appId: "1:307237370999:web:1ed19da447a6ab60415a72",
-  measurementId: "G-5JVZPR4C9X"
+  apiKey: "AIzaSyDKQ3jVjZ3SdUXPXaGfJVGEQdyFyKIpkwk",
+  authDomain: "crwn-clothing-db-fd5d1.firebaseapp.com",
+  databaseURL: "https://crwn-clothing-db-fd5d1.firebaseio.com",
+  projectId: "crwn-clothing-db-fd5d1",
+  storageBucket: "crwn-clothing-db-fd5d1.appspot.com",
+  messagingSenderId: "636050948958",
+  appId: "1:636050948958:web:af451860f7c4c76fd1c5cf",
+  measurementId: "G-VX8KKXRN0D"
 }
 
 // Initialize Firebase
@@ -29,6 +29,27 @@ provider.setCustomParameters({
 })
 
 export const signInWithGoogle = () => auth.signInWithPopup(provider)
+
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+  // if (!userAuth) return
+  const userRef = firestore.doc(`users/${userAuth.uid}`)
+  const snapShot = await userRef.get()
+  if (!snapShot.exists) {
+    const { displayName, email } = userAuth
+    const createdAt = new Date()
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...additionalData
+      })
+    } catch (error) {
+      console.error(`Error occurred while saving user information in database: ${error.message}`)
+    }
+  }
+  return userRef
+}
 
 export default firebase
 
